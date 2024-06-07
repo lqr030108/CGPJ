@@ -60,7 +60,7 @@ def decimate_mesh(verts, faces, target, backend='pymeshlab', remesh=False, optim
 
         if remesh:
             # ms.apply_coord_taubin_smoothing()
-            ms.meshing_isotropic_explicit_remeshing(iterations=3, targetlen=pml.PercentageValue(1))
+            ms.meshing_isotropic_explicit_remeshing(iterations=3, targetlen=pml.Percentage(1))
 
         # extract mesh
         m = ms.current_mesh()
@@ -87,13 +87,13 @@ def clean_mesh(verts, faces, v_pct=1, min_f=8, min_d=5, repair=True, remesh=True
     ms.meshing_remove_unreferenced_vertices() # verts not refed by any faces
 
     if v_pct > 0:
-        ms.meshing_merge_close_vertices(threshold=pml.PercentageValue(v_pct)) # 1/10000 of bounding box diagonal
+        ms.meshing_merge_close_vertices(threshold=pml.Percentage(v_pct)) # 1/10000 of bounding box diagonal
 
     ms.meshing_remove_duplicate_faces() # faces defined by the same verts
     ms.meshing_remove_null_faces() # faces with area == 0
 
     if min_d > 0:
-        ms.meshing_remove_connected_component_by_diameter(mincomponentdiag=pml.PercentageValue(min_d))
+        ms.meshing_remove_connected_component_by_diameter(mincomponentdiag=pml.Percentage(min_d))
     
     if min_f > 0:
         ms.meshing_remove_connected_component_by_face_number(mincomponentsize=min_f)
